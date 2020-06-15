@@ -7,9 +7,11 @@
 //
 
 #include <iostream>
-
+#include <sstream>
+#include "Lexer.hpp"
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
+    Lexer lexer;
+    lexer.tokenize("int a = 10 int b = 20");
+    lexer.dump();
     return 0;
 }
