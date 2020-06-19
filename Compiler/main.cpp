@@ -9,9 +9,12 @@
 #include <iostream>
 #include <sstream>
 #include "Lexer.hpp"
+#include "Parser.hpp"
 int main(int argc, const char * argv[]) {
-    Lexer lexer;
-    lexer.tokenize("int a = 10 int b = 20");
-    lexer.dump();
+//    Lexer lexer;
+//    lexer.tokenize("int a = 10 int b = 20");
+//    lexer.dump();
+    Parser p;
+    p.expr();
     return 0;
 }

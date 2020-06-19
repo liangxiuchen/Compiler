@@ -12,6 +12,7 @@
 using namespace std;
 
 void Lexer::tokenize(std::string scripts) {
+    using Type = Token::Type;
     auto iterator  = scripts.cbegin();
     state = initial;
     stringstream sstream;
@@ -40,7 +41,7 @@ void Lexer::tokenize(std::string scripts) {
                     lexme += move(ch);
                 } else {
                     state = initial;
-                    tokens.push_back(Token(lexme, "id"));
+                    tokens.push_back(Token(lexme, Type::identifier));
                     lexme = "";
                 }
             }
@@ -50,7 +51,6 @@ void Lexer::tokenize(std::string scripts) {
                     lexme += move(ch);
                 } else {
                     state = initial;
-                    tokens.push_back(Token(lexme, "blank"));
                     lexme = "";
                 }
             }
@@ -59,11 +59,11 @@ void Lexer::tokenize(std::string scripts) {
                 if (isDigit(ch)) {
                     lexme += move(ch);
                     if (iterator + 1 == scripts.cend()) {
-                        tokens.push_back(Token(lexme, "digit"));
+                        tokens.push_back(Token(lexme, Type::number));
                     }
                 } else {
                     state = initial;
-                    tokens.push_back(Token(lexme, "digit"));
+                    tokens.push_back(Token(lexme, Type::number));
                     lexme = "";
                 }
             }
@@ -73,7 +73,7 @@ void Lexer::tokenize(std::string scripts) {
                     lexme += move(ch);
                 } else {
                     state = initial;
-                    tokens.push_back(Token(lexme, "assign"));
+                    tokens.push_back(Token(lexme, Type::assign));
                     lexme = "";
                 }
             }
@@ -87,19 +87,19 @@ void Lexer::tokenize(std::string scripts) {
     if (isalpha(ch)) {
         state = id;
         lexme += move(ch);
-        tokens.push_back(Token(lexme, "alpha"));
+        tokens.push_back(Token(lexme, Type::identifier));
     } else if (isBlank(ch)){
         state = blank;
         lexme += move(ch);
-        tokens.push_back(Token(lexme, "blank"));
+        tokens.push_back(Token(lexme, Type::blank));
     } else if (isDigit(ch)) {
         state = digit;
         lexme += move(ch);
-        tokens.push_back(Token(lexme, "digit"));
+        tokens.push_back(Token(lexme, Type::number));
     } else if (isAssign(ch)) {
         state = assign;
         lexme += move(ch);
-        tokens.push_back(Token(lexme, "assign"));
+        tokens.push_back(Token(lexme, Type::assign));
     }
 }
 

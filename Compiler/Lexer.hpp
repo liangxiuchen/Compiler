@@ -14,9 +14,18 @@
 #include <string>
 
 struct Token {
+    enum Type {
+        identifier,
+        keyword,
+        builInType,
+        number,
+        buildInOperator,
+        assign,
+        blank
+    };
     std::string lexme;
-    std::string type;
-    Token(std::string lexme, std::string type) : lexme(lexme), type(type){};
+    Type type;
+    Token(std::string lexme, Type type) : lexme(lexme), type(type){};
 };
 
 class Lexer {
@@ -26,7 +35,7 @@ private:
         id,
         digit,
         assign,
-        blank
+        blank,
     };
     
 public:
@@ -39,15 +48,59 @@ public:
     }
     
     bool isBlank(char ch) {
-        return ch == ' ' || ch == '\t' || ch == '\n';
+        return ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r';
     }
     
     bool isDigit(char ch) {
         return ch >= '0' && ch <= '9';
     }
-    
+    //operator
     bool isAssign(char ch) {
         return ch == '=';
+    }
+    
+    bool isAdd(char ch) {
+        return ch == '+';
+    }
+    
+    bool isMinus(char ch) {
+        return ch == '-';
+    }
+    
+    bool isMulti(char ch) {
+        return ch == '*';
+    }
+    
+    bool isDividor(char ch) {
+        return ch == '/';
+    }
+    
+    bool isMod(char ch) {
+        return ch == '%';
+    }
+    //limitor
+    bool isLeftParen(char ch) {
+        return ch == '(';
+    }
+    
+    bool isRightParen(char ch) {
+        return ch == ')';
+    }
+    
+    bool isLeftBrace(char ch) {
+        return ch == '{';
+    }
+    
+    bool isRightBrace(char ch) {
+        return ch == '}';
+    }
+    
+    bool isLeftBracket(char ch) {
+        return ch == '[';
+    }
+    
+    bool isRightBracket(char ch) {
+        return ch == ']';
     }
 private:
     std::vector<Token> tokens;
